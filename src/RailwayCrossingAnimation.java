@@ -12,7 +12,7 @@ void main() {
     frame.setVisible(true);
 }
 
-static class RailwayCrossingAnimation extends JFrame implements ActionListener {
+static class RailwayCrossingAnimation extends JPanel implements ActionListener {
 
     private Timer timer;
 
@@ -39,6 +39,8 @@ static class RailwayCrossingAnimation extends JFrame implements ActionListener {
         timer = new Timer(20, this);
         timer.start();
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
