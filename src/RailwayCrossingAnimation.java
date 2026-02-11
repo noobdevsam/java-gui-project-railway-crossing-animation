@@ -52,14 +52,39 @@ static class CrossingAnimation extends JPanel implements ActionListener {
         );
 
         // Draw train
+        drawBackground(graphics2D);
+        drawRoad(graphics2D);
+        drawRailway(graphics2D);
+        drawTrain(graphics2D);
+        drawGate(graphics2D);
+        drawWarningLights(graphics2D);
 
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+    // Private helper methods to draw
+    private void drawBackground(Graphics2D graphics2D) {
+
+    }
+
+    private void drawWarningLights(Graphics2D graphics2D) {
+    }
+
+    private void drawGate(Graphics2D graphics2D) {
+    }
+
+    private void drawTrain(Graphics2D graphics2D) {
+    }
+
+    private void drawRailway(Graphics2D graphics2D) {
+    }
+
+    private void drawRoad(Graphics2D graphics2D) {
+    }
+
 }
 
