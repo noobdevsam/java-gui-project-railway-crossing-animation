@@ -43,6 +43,16 @@ static class RailwayCrossingAnimation extends JPanel implements ActionListener {
     @Override
     protected void printComponent(Graphics g) {
         super.printComponent(g);
+        var graphics2D = (Graphics2D) g;
+
+        // Smooth animation
+        graphics2D.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
+        );
+
+        // Draw train
+
     }
 
     @Override
