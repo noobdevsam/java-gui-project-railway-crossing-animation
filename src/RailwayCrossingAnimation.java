@@ -68,7 +68,12 @@ static class CrossingAnimation extends JPanel implements ActionListener {
 
     // Private helper methods to draw
     private void drawBackground(Graphics2D graphics2D) {
-
+        var skyGradient = new GradientPaint(
+                0, 0, new Color(135, 206, 235),
+                0, getHeight(), new Color(25, 25, 112)
+        );
+        graphics2D.setPaint(skyGradient);
+        graphics2D.fillRect(0, 0, getWidth(), getHeight());
     }
 
     private void drawWarningLights(Graphics2D graphics2D) {
