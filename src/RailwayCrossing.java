@@ -60,7 +60,43 @@ static class CrossingAnimation extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Move train
+        trainX += trainSpeed;
 
+        // Reset train after passing screen
+        if (trainX > getWidth()) {
+            trainX = -300;
+        }
+
+        // Trigger logic
+        if (trainX > crossingX - 250 && trainX < crossingX + 200) {
+            gateClosing = true;
+            gateOpening = false;
+        } else {
+            gateOpening = true;
+            gateClosing = false;
+        }
+
+        // Gate animation
+        if (gateClosing && gateAngle < 90) {
+            gateAngle += 2;
+        }
+
+        if (gateOpening && gateAngle > 0) {
+            gateAngle -= 2;
+        }
+
+        // Warning light flashing
+        if (gateAngle > 0) {
+            lightTimer++;
+            if (lightTimer % 20 == 0) {
+                lightOn = !lightOn;
+            }
+        } else {
+            lightOn = false;
+        }
+
+        repaint();
     }
 
     // Private helper methods to draw
