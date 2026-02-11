@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 
 void main() {
     var frame = new JFrame("Railway Level Crossing Animation");
@@ -76,6 +77,42 @@ static class CrossingAnimation extends JPanel implements ActionListener {
     }
 
     private void drawGate(Graphics2D graphics2D) {
+        var baseX = crossingX;
+        var baseY = 300;
+
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.fillRect(
+                baseX - 10,
+                baseY - 80,
+                20,
+                80
+        );
+
+        var oldAffineTransform = graphics2D.getTransform();
+        graphics2D.rotate(
+                Math.toRadians(gateAngle),
+                baseX,
+                baseY - 80
+        );
+
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.fillRect(
+                baseX,
+                baseY - 90,
+                120,
+                10
+        );
+
+        graphics2D.setColor(Color.RED);
+        for (var i = 0; i < 6; i++) {
+            graphics2D.fillRect(
+                    baseX + i * 20,
+                    baseY - 90,
+                    10,10
+            );
+        }
+
+        graphics2D.setTransform(oldAffineTransform);
     }
 
     private void drawTrain(Graphics2D graphics2D) {
