@@ -238,7 +238,7 @@ public class RailCrossingAnimation extends JPanel implements ActionListener {
         }
     }
 
-    void main() {
+    static void main(String[] args) {
         var frame = new JFrame("Railway Level Crossing Animation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new RailCrossingAnimation());
