@@ -14,24 +14,20 @@ void main() {
 
 static class CrossingAnimation extends JPanel implements ActionListener {
 
-    private Timer timer;
-
-    // Train properties
-    private int trainX = -300;
     private final int trainY = 250;
     private final int trainSpeed = 3;
-
+    // Crossing trigger zone
+    private final int crossingX = 400;
+    private Timer timer;
+    // Train properties
+    private int trainX = -300;
     // Gate properties
     private double gateAngle = 0; // 0 = open, 90 = closed
     private boolean gateClosing = false;
     private boolean gateOpening = false;
-
     // Warning lights
     private boolean lightOn = false;
     private int lightTimer = 0;
-
-    // Crossing trigger zone
-    private final int crossingX = 400;
 
     public CrossingAnimation() {
         setPreferredSize(new Dimension(900, 500));
@@ -89,6 +85,13 @@ static class CrossingAnimation extends JPanel implements ActionListener {
     }
 
     private void drawRoad(Graphics2D graphics2D) {
+        graphics2D.setColor(new Color(50, 50, 50));
+        graphics2D.fillRect(0,300, getWidth(), 80);
+
+        graphics2D.setColor(Color.YELLOW);
+        for (var i = 0; i < getWidth(); i += 40) {
+            graphics2D.fillRect(i, 335, 20, 4);
+        }
     }
 
 }
