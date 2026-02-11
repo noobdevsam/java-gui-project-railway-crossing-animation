@@ -82,6 +82,9 @@ static class CrossingAnimation extends JPanel implements ActionListener {
     }
 
     private void drawRailway(Graphics2D graphics2D) {
+        graphics2D.setColor(Color.DARK_GRAY);
+        graphics2D.fillRect(0, 270, getWidth(), 10);
+        graphics2D.fillRect(0, 290, getWidth(), 10);
     }
 
     private void drawRoad(Graphics2D graphics2D) {
