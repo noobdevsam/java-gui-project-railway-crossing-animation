@@ -40,7 +40,10 @@ static class RailwayCrossingAnimation extends JPanel implements ActionListener {
         timer.start();
     }
 
-
+    @Override
+    protected void printComponent(Graphics g) {
+        super.printComponent(g);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
