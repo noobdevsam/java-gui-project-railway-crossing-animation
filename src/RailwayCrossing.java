@@ -119,10 +119,15 @@ static class CrossingAnimation extends JPanel implements ActionListener {
         graphics2D.setColor(
                 new Color(178, 34, 34)
         );
-        graphics2D.fillRect(trainX, trainY, 250, 50);
+        graphics2D.fillRect(
+                trainX,
+                trainY,
+                250,
+                50
+        );
 
         graphics2D.setColor(Color.LIGHT_GRAY);
-        for (int i = 0; i < 4; i++) {
+        for (var i = 0; i < 4; i++) {
             graphics2D.fillRect(
                     trainX + 20 + i * 50,
                     trainY + 10,
@@ -148,17 +153,39 @@ static class CrossingAnimation extends JPanel implements ActionListener {
 
     private void drawRailway(Graphics2D graphics2D) {
         graphics2D.setColor(Color.DARK_GRAY);
-        graphics2D.fillRect(0, 270, getWidth(), 10);
-        graphics2D.fillRect(0, 290, getWidth(), 10);
+        graphics2D.fillRect(
+                0,
+                270,
+                getWidth(),
+                10
+        );
+        graphics2D.fillRect(
+                0,
+                290,
+                getWidth(),
+                10
+        );
     }
 
     private void drawRoad(Graphics2D graphics2D) {
-        graphics2D.setColor(new Color(50, 50, 50));
-        graphics2D.fillRect(0,300, getWidth(), 80);
+        graphics2D.setColor(
+                new Color(50, 50, 50)
+        );
+        graphics2D.fillRect(
+                0,
+                300,
+                getWidth(),
+                80
+        );
 
         graphics2D.setColor(Color.YELLOW);
         for (var i = 0; i < getWidth(); i += 40) {
-            graphics2D.fillRect(i, 335, 20, 4);
+            graphics2D.fillRect(
+                    i,
+                    335,
+                    20,
+                    4
+            );
         }
     }
 
