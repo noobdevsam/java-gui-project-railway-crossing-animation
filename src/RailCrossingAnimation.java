@@ -2,18 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
 
-void main() {
-    var frame = new JFrame("Railway Level Crossing Animation");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new CrossingAnimation());
-    frame.pack();
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
-}
-
-static class CrossingAnimation extends JPanel implements ActionListener {
+public class RailCrossingAnimation extends JPanel implements ActionListener {
 
     private final int trainY = 250;
     private final int trainSpeed = 3;
@@ -30,7 +20,7 @@ static class CrossingAnimation extends JPanel implements ActionListener {
     private boolean lightOn = false;
     private int lightTimer = 0;
 
-    public CrossingAnimation() {
+    public RailCrossingAnimation() {
         setPreferredSize(new Dimension(900, 500));
         setBackground(Color.WHITE);
         timer = new Timer(20, this);
@@ -246,6 +236,15 @@ static class CrossingAnimation extends JPanel implements ActionListener {
                     4
             );
         }
+    }
+
+    void main() {
+        var frame = new JFrame("Railway Level Crossing Animation");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new RailCrossingAnimation());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
 }
