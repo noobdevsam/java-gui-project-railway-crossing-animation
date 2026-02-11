@@ -132,7 +132,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         drawTracks(g2d);
 
         // 4. Draw Train
-        AffineTransform oldTransform = g2d.getTransform();
+        var oldTransform = g2d.getTransform();
         g2d.translate(trainX, TRACK_Y - 55);
         drawTrain(g2d);
         g2d.setTransform(oldTransform);
@@ -239,9 +239,9 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
 
     private void drawSignalsAndGates(Graphics2D g2d) {
         // Position the poles relative to the road
-        int poleY = TRACK_Y + 50;
-        int leftPoleX = ROAD_X - 15;
-        int rightPoleX = ROAD_X + ROAD_WIDTH + 15;
+        var poleY = TRACK_Y + 50;
+        var leftPoleX = ROAD_X - 15;
+        var rightPoleX = ROAD_X + ROAD_WIDTH + 15;
 
         drawSignalPost(g2d, leftPoleX, poleY, true);   // Left side
         drawSignalPost(g2d, rightPoleX, poleY, false); // Right side
@@ -284,6 +284,17 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         // We draw the gate simply as a horizontal line to the right (0 to length).
         // Angle 0 = Horizontal Right. Angle -90 = Vertical Up. Angle -180 = Horizontal Left.
 
+        double rotationRad = getRotationRad(isLeft);
+
+        g2d.rotate(rotationRad);
+
+        // Draw the Arm (Standard length)
+        drawGateArm(g2d);
+
+        g2d.setTransform(old);
+    }
+
+    private double getRotationRad(boolean isLeft) {
         double rotationRad;
         if (isLeft) {
             // Left gate needs to point RIGHT when down.
@@ -299,19 +310,13 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
             // Formula: rotation = Math.toRadians(gateAngle - 180).
             rotationRad = Math.toRadians(gateAngle - 180);
         }
-
-        g2d.rotate(rotationRad);
-
-        // Draw the Arm (Standard length)
-        drawGateArm(g2d);
-
-        g2d.setTransform(old);
+        return rotationRad;
     }
 
     private void drawGateArm(Graphics2D g2d) {
         // Arm body
         g2d.setColor(Color.RED);
-        int armLen = (ROAD_WIDTH / 2) + 20; // Meet in the middle + slight overlap
+        var armLen = (ROAD_WIDTH / 2) + 20; // Meet in the middle + slight overlap
         g2d.fillRect(0, -4, armLen, 8);
 
         // Stripes
@@ -323,7 +328,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
 
     static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Railway Level Crossing Control System");
+            var frame = new JFrame("Railway Level Crossing Control System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);
             frame.add(new RailwayLevelCrossing());
