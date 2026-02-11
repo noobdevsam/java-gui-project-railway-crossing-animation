@@ -74,6 +74,29 @@ static class CrossingAnimation extends JPanel implements ActionListener {
     }
 
     private void drawWarningLights(Graphics2D graphics2D) {
+        var poleX = crossingX - 50;
+        var poleY = 220;
+
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.fillRect(
+                poleX,
+                poleY,
+                10,
+                80
+        );
+
+        if (lightOn) {
+            graphics2D.setColor(Color.RED);
+        } else {
+            graphics2D.setColor(Color.DARK_GRAY);
+        }
+
+        graphics2D.fillOval(
+                poleX - 10,
+                poleY - 30,
+                30,
+                30
+        );
     }
 
     private void drawGate(Graphics2D graphics2D) {
