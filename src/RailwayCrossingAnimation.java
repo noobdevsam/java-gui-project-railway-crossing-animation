@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 void main() {
     var frame = new JFrame("Railway Level Crossing Animation");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.add(new RailwayCrossingAnimation());
+    frame.add(new CrossingAnimation());
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
 }
 
-static class RailwayCrossingAnimation extends JPanel implements ActionListener {
+static class CrossingAnimation extends JPanel implements ActionListener {
 
     private Timer timer;
 
@@ -33,7 +33,7 @@ static class RailwayCrossingAnimation extends JPanel implements ActionListener {
     // Crossing trigger zone
     private final int crossingX = 400;
 
-    public RailwayCrossingAnimation() {
+    public CrossingAnimation() {
         setPreferredSize(new Dimension(900, 500));
         setBackground(Color.WHITE);
         timer = new Timer(20, this);
@@ -54,6 +54,8 @@ static class RailwayCrossingAnimation extends JPanel implements ActionListener {
         // Draw train
 
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
