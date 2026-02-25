@@ -88,6 +88,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
                 // Check if the train has fully left the screen
                 if (trainX > WIDTH) {
                     currentState = State.OPENING;
+                    trainX = WIDTH + 100; // Ensure it's fully off-screen
                 }
             }
 
