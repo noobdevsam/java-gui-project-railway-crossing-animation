@@ -1,1 +1,154 @@
-initial
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import javax.swing.*;
+
+class CoordinatePlane extends JPanel implements ActionListener {
+
+    int step = 0;
+    Timer timer;
+    boolean isRunning = true;
+
+    String[] labels = {
+        "Translation",
+        "Rotation (45°)",
+        "Scaling (1.5x)",
+        "Reflection (X-axis)",
+        "Shear"
+    };
+
+    public CoordinatePlane() {
+        timer = new Timer(5000, this);
+        timer.start();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
+        // -------- AXES (ALWAYS VISIBLE) --------
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawLine(0, 220, 640, 220); // x-axis
+        g2d.drawLine(320, 0, 320, 480); // y-axis
+
+        // -------- LABEL --------
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.drawString(labels[step], 20, 30);
+
+        // -------- ORIGINAL TRIANGLE (ALWAYS SHOWN) --------
+        // Slightly above x-axis (y < 220)
+        int[] xPoints = {400, 440, 360};
+        int[] yPoints = {140, 210, 210}; // base just above x-axis
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawPolygon(xPoints, yPoints, 3);
+
+        // Save transform
+        AffineTransform original = g2d.getTransform();
+
+        // -------- TRANSFORMED TRIANGLE --------
+        switch (step) {
+
+            case 0 -> {
+                // TRANSLATION
+                AffineTransform t = new AffineTransform();
+                t.translate(-120, 40);
+                g2d.setTransform(t);
+                g2d.setColor(Color.RED);
+                g2d.drawPolygon(xPoints, yPoints, 3);
+            }
+
+            case 1 -> {
+                // ROTATION
+                AffineTransform r = new AffineTransform();
+                r.rotate(Math.toRadians(45), 320, 220);
+                g2d.setTransform(r);
+                g2d.setColor(Color.BLUE);
+                g2d.drawPolygon(xPoints, yPoints, 3);
+            }
+
+            case 2 -> {
+                // SCALING
+                AffineTransform s = new AffineTransform();
+                s.translate(320, 220);
+                s.scale(1.5, 1.5);
+                s.translate(-320, -220);
+                g2d.setTransform(s);
+                g2d.setColor(Color.GREEN);
+                g2d.drawPolygon(xPoints, yPoints, 3);
+            }
+
+            case 3 -> {
+                // REFLECTION ABOUT X-AXIS
+                AffineTransform ref = new AffineTransform();
+                ref.translate(0, 220);   // move to x-axis
+                ref.scale(1, -1);        // reflect vertically
+                ref.translate(0, -220);  // move back
+                g2d.setTransform(ref);
+                g2d.setColor(Color.MAGENTA);
+                g2d.drawPolygon(xPoints, yPoints, 3);
+            }
+
+            case 4 -> {
+                // SHEAR
+                AffineTransform sh = new AffineTransform();
+                sh.shear(0.5, 0);
+                g2d.setTransform(sh);
+                g2d.setColor(Color.ORANGE);
+                g2d.drawPolygon(xPoints, yPoints, 3);
+            }
+        }
+
+        g2d.setTransform(original);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        step++;
+        if (step >= labels.length) step = 0;
+        repaint();
+    }
+
+    // -------- UI CONTROLS --------
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Triangle Transformations");
+        CoordinatePlane panel = new CoordinatePlane();
+
+        JButton pauseBtn = new JButton("Pause");
+        JButton resetBtn = new JButton("Reset");
+
+        pauseBtn.addActionListener(e -> {
+            if (panel.isRunning) {
+                panel.timer.stop();
+                pauseBtn.setText("Resume");
+            } else {
+                panel.timer.start();
+                pauseBtn.setText("Pause");
+            }
+            panel.isRunning = !panel.isRunning;
+        });
+
+        resetBtn.addActionListener(e -> {
+            panel.timer.stop();
+            panel.step = 0;
+            panel.repaint();
+            pauseBtn.setText("Pause");
+            panel.timer.start();
+            panel.isRunning = true;
+        });
+
+        JPanel controls = new JPanel();
+        controls.add(pauseBtn);
+        controls.add(resetBtn);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(controls, BorderLayout.SOUTH);
+
+        frame.setSize(640, 520);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
