@@ -30,7 +30,6 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
     }
 
     private State currentState = State.IDLE;
-    private final Timer timer;
 
     // --- Animation Variables ---
     private double gateAngle = 90; // 90 degrees = Up (Vertical), 0 degrees = Down (Horizontal)
@@ -44,7 +43,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         setBackground(Color.CYAN);
 
         // Timer for the animation loop
-        timer = new Timer(1000 / FPS, this);
+        var timer = new Timer(1000 / FPS, this);
         timer.start();
     }
 
@@ -327,7 +326,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         }
     }
 
-    static void main(String[] args) {
+    static void main() {
         SwingUtilities.invokeLater(() -> {
             var frame = new JFrame("Railway Level Crossing Control System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
