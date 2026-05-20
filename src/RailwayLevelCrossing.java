@@ -30,7 +30,23 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
     }
 
     private State currentState = State.IDLE;
-    private final Timer timer;
+
+    // --- Car Logic ---
+    private class Car {
+        int y;
+        Color color;
+
+        Car(int y) {
+            this.y = y;
+            this.color = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
+        }
+    }
+
+    private final java.util.List<Car> cars = new java.util.ArrayList<>();
+    private static final int CAR_SPEED = 3;
+    private static final int CAR_HEIGHT = 70;
+    private static final int MIN_DISTANCE = 20;
+    private static final int STOP_BUFFER = 30; // Distance from track
 
     // --- Animation Variables ---
     private double gateAngle = 90; // 90 degrees = Up (Vertical), 0 degrees = Down (Horizontal)
@@ -44,7 +60,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         setBackground(Color.CYAN);
 
         // Timer for the animation loop
-        timer = new Timer(1000 / FPS, this);
+        var timer = new Timer(1000 / FPS, this);
         timer.start();
     }
 
@@ -103,6 +119,27 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
 
         }
 
+        // --- Car Management ---
+        // Add new cars
+        if (Math.random() < 0.02) {
+            cars.add(new Car(HEIGHT));
+        }
+
+        // Move cars
+        boolean isRoadBlocked = (currentState != State.IDLE && currentState != State.OPENING);
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            boolean canMove = true;
+            if (i > 0) {
+                Car carInFront = cars.get(i - 1);
+                if (car.y - (carInFront.y + CAR_HEIGHT) < MIN_DISTANCE) canMove = false;
+            }
+            if (isRoadBlocked && car.y - CAR_SPEED < TRACK_Y + STOP_BUFFER && car.y > TRACK_Y) canMove = false;
+            if (canMove) car.y -= CAR_SPEED;
+        }
+        cars.removeIf(c -> c.y < TRACK_Y - 50);
+
         repaint();
     }
 
@@ -128,6 +165,14 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
 
         // 2. Draw Road
         drawRoad(g2d);
+
+        // 2.1 Draw Cars
+        for (Car car : cars) {
+            g2d.setColor(car.color);
+            g2d.fillRect(ROAD_X + 50, car.y, 40, CAR_HEIGHT); // Single lane
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(ROAD_X + 55, car.y + 40, 30, 20); // Windshield
+        }
 
         // 3. Draw Tracks
         drawTracks(g2d);
@@ -327,7 +372,7 @@ public class RailwayLevelCrossing extends JPanel implements ActionListener {
         }
     }
 
-    static void main(String[] args) {
+    static void main() {
         SwingUtilities.invokeLater(() -> {
             var frame = new JFrame("Railway Level Crossing Control System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
