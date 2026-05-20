@@ -1,7 +1,8 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 
 class CoordinatePlane extends JPanel implements ActionListener {
 
@@ -112,7 +113,7 @@ class CoordinatePlane extends JPanel implements ActionListener {
     }
 
     // -------- UI CONTROLS --------
-    public static void main(String[] args) {
+    static void main(String[] args) {
         JFrame frame = new JFrame("Triangle Transformations");
         CoordinatePlane panel = new CoordinatePlane();
 
